@@ -1,74 +1,115 @@
 <!DOCTYPE>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Sky BBS</title>
   <style>
-    #header { 
-    	width: 100%;
-    	height: 200px;
-    	margin: 0 auto;
-    	background: #ccc;
-    	color: #fff;
-    }
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: "微软雅黑", "黑体";
+		background: #eee;
+	}
 
-    #container {
-    	width: 100%;
-    	height: 100%;
-    	margin: 7px auto;
-    	background: #ccc;
-    }
+	#header { 
+		width: 1000px;
+		height: 200px;
+		margin: 0 auto;
+		background: #65C99C;
+		color: #fff;
+	}
 
-    #c-left {
-    	float: left;
-    	height: 100%;
-    	width: 18%;
-    	background: #ddd;
-    	margin-right: 2%;
-    }
+	#header #logo {
+		height: 130px;
+	}
 
-    #c-mid {
-    	float: left;
-    	height: 100%;
-    	width: 60%;
-    	background: #ddd;
-    	margin-right: 2%;
-    }
+	#header #nav-menu {
+		height: 70px;
+		color: #fff;
+		padding: 0 30px;
+		font-size: 18px;
+		border-top: 0px solid #009999;
+	}
+
+	#header #nav-menu ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	#header #nav-menu ul li {
+		list-style-type: none;
+		float: left;
+		padding-right: 40px;
+		line-height: 65px;
+	}
+
+	#header #nav-menu a {
+		color: #fff;
+		text-decoration: none;
+	}
+
+	#container {
+		width: 1000px;
+		height: 100%;
+		margin: 0px auto;
+		background: #fff;
+	}
+
+	#c-left {
+		float: left;
+		height: 100%;
+		width: 18%;
+		background: #fff;
+		margin-right: 2%;
+	}
+
+	#c-mid {
+		float: left;
+		height: 100%;
+		width: 60%;
+		background: #fff;
+		margin-right: 2%;
+	}
 
 	#c-right {
-    	float: left;
-    	height: 100%;
-    	width: 18%;
-    	background: #ddd;
-    }
-
-    #footer {
-		width: 100%;
-    	height: 200px;
-    	margin: 0 auto;
-    	background: #ccc;
-    	color: #fff;
-    }
-
-	#screen {
-		width: 1000px;
-		height: 800px;
-		margin: 0 auto;
-		background: #000;
-		border: 1px solid #aaa;
-		box-shadow: 3px 4px 5px #000;
+		float: left;
+		height: 100%;
+		width: 18%;
+		background: #fff;
 	}
+
+	#footer {
+		width: 1000px;
+		height: 100px;
+		margin: 0 auto;
+		color: #fff;
+		background: #65C99C;
+	}
+
+ 
   </style>
-  <script src="js/jquery.js"></script>
+  <script src="js/require.js" defer async="true" data-main="js/main"></script>
 </head>
 <body>
-  <div id="header"></div>
-  <div id="container">
-    <div id="c-left"></div>
-    <div id="c-mid"></div>
-    <div id="c-right"></div>
+  <div id="header">
+	<div id="logo"></div>
+	<div id="nav-menu">
+	  <ul>
+		<li><a href="">首页</a></li>
+		<li><a href="">论坛</a></li>
+		<li><a href="">小说</a></li>
+		<li><a href="">分类</a></li>
+		<li><a href="">留言</a></li>
+	  </ul>
+	</div>
   </div>
-
-  <script>
-  </script>
+  <div id="container">
+	<div id="c-left"></div>
+	<div id="c-mid"></div>
+	<div id="c-right"></div>
+  </div>
+  <div id="footer">
+  </div>
+  <script></script>
 </body>
 </html>
