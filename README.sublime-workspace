@@ -1,0 +1,260 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"getE",
+				"getElementsByTagName"
+			],
+			[
+				"b",
+				"background"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 335.0,
+		"last_filter": "in",
+		"selected_items":
+		[
+			[
+				"in",
+				"Package Control: Install Package→安装插件"
+			],
+			[
+				"i",
+				"Package Control: Install Package→安装插件"
+			]
+		],
+		"width": 594.0
+	},
+	"console":
+	{
+		"height": 146.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/Git/MyBBS/js/main.js",
+		"/D/Git/MyBBS/js/a.js",
+		"/D/Git/MyBBS/js/require.js",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/Data/Packages/User/Preferences.sublime-settings",
+		"/D/Git/MyBBS/index.html",
+		"/D/Git/android/AStartTest/src/main/java/com/example/astarttest/AStartView.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/net/http/HttpDownloader.java",
+		"/D/BattleCity/src/Object/Tank.js",
+		"/D/Git/jsLib/common.js",
+		"/D/BattleCity/src/Game.js",
+		"/D/BattleCity/src/App.js",
+		"/D/BattleCity/src/WebPlay.js",
+		"/D/BattleCity/src/Util/Misc.js",
+		"/D/BattleCity/src/UI/UIGame.js",
+		"/D/Git/jsLib/test.html",
+		"/D/Git/jsLib/Pagination.js",
+		"/D/requirejs-master/require.js",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/Data/Packages/Default/Preferences.sublime-settings",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/Data/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/Data/Packages/User/Git.sublime-settings",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/Data/Packages/Git/Git.sublime-settings",
+		"/D/Git/MyBBS/js/jquery.js",
+		"/D/Workspace/T882016006/WebRoot/WeChatPages/ionic/js/angular/angular.js",
+		"/D/Workspace/T882016006/WebRoot/WeChatPages/ionic/js/angular/angular.min.js",
+		"/D/Workspace/T882016006/WebRoot/WeChatPages/ionic/js/angular/angular-animate.js",
+		"/D/Workspace/T882016006/WebRoot/WeChatPages/ionic/js/angular/angular-resource.js",
+		"/C/Users/admin/Desktop/www/排行.html",
+		"/D/Workspace/T882016006/WebRoot/WeChatPages/js/utils.js",
+		"/C/Users/admin/Desktop/www/js/jquery-1.12.1.min.js",
+		"/C/Users/admin/Desktop/www/js/slick.min.js",
+		"/C/Users/admin/Desktop/www/js/blocksit.js",
+		"/D/apache-tomcat-7.0.57/webapps/T882016001/manages/src/jquery.gvChart-1.0.1.js",
+		"/D/apache-tomcat-7.0.57/webapps/T882016001/manages/proxy.jsp",
+		"/D/apache-tomcat-7.0.57/webapps/T882016001/manages/uploadpd.jsp",
+		"/D/apache-tomcat-7.0.57/webapps/T882016001/manages/olappwdlist.jsp",
+		"/D/apache-tomcat-7.0.57/webapps/T882016001/manages/OpenQF.html",
+		"/D/Workspace/T882016006/WebRoot/index.html",
+		"/D/apache-tomcat-7.0.57/bin/version.sh",
+		"/D/apache-tomcat-7.0.57/bin/digest.sh",
+		"/D/apache-tomcat-7.0.57/bin/startup.sh",
+		"/D/apache-tomcat-7.0.57/bin/daemon.sh",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/Engine.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/animation/Animation.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/GameContext.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/subsystem/GraphicsSubsystem.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/Timer.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/entity/Tank.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/entity/ArmorPiercingBullet.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/entity/Wall.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/animation/Explosion.java",
+		"/D/apache-tomcat-7.0.57/RUNNING.txt",
+		"/C/Users/Public/Videos/Sample Videos/Wildlife.wmv",
+		"/C/Program Files (x86)/Tencent/QQ/Bin/ABL.sys",
+		"/C/Program Files (x86)/Tencent/QQ/Bin/auclt.exe",
+		"/C/Program Files (x86)/Tencent/QQ/Bin/QQScLauncher.exe",
+		"/C/Users/admin/Documents/Tencent Files/878805905/FileRecv/proxy.jsp",
+		"/C/Users/admin/Desktop/文件/农场/首页.html",
+		"/D/apache-tomcat-7.0.57/webapps/T882016006/index.html",
+		"/C/Users/admin/Desktop/文件/农场/个人中心.html",
+		"/D/Workspace/T882016005/src/com/ruike/actionmanage/UploadAction.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/subsystem/Sprite.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/subsystem/AISubsystem.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/manager/ResourceManager.java",
+		"/D/Git/android/TankWar/src/main/java/com/tankwar/engine/manager/FileManager.java",
+		"/C/Program Files/Sublime Text 3.3111-x86 by roustar31/Sublime Text 3x86/sublime.py"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"emsp",
+			"maxIndex",
+			"Module",
+			"checkLoaded",
+			"intakeDefines",
+			"nextTick",
+			"onScriptLoad",
+			"window",
+			"require ",
+			"require : ",
+			"completeLoad",
+			"require",
+			"history",
+			"lookHistory"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"nbsp"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "README.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 348.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

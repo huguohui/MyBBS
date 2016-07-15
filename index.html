@@ -95,18 +95,18 @@
 
  
   </style>
-  <script src="js/require.js" defer async="true" data-main="js/main"></script>
+  <script src="js/require.js" data-main="js/main"></script>
 </head>
 <body>
   <div id="header">
 	<div id="logo"></div>
 	<div id="nav-menu">
 	  <ul>
-		<li><img src="img/home.png" /><a href="">首页</a></li>
-		<li><img src="img/bbs.png" /><a href="">论坛</a></li>
-		<li><img src="img/a.png" /><a href="">小说</a></li>
-		<li><img src="img/download.png" /><a href="">分类</a></li>
-		<li><a href="">留言</a></li>
+		<li><img src="img/home.png" />&nbsp;<a href="">首页</a></li>
+		<li><img src="img/bbs.png" />&nbsp;<a href="">论坛</a></li>
+		<li><img src="img/a.png" />&nbsp;<a href="">小说</a></li>
+		<li><img src="img/download.png" />&nbsp;<a href="">分类</a></li>
+		<li><img src="img/download.png" />&nbsp;<a href="">留言</a></li>
 	  </ul>
 	</div>
   </div>
@@ -115,8 +115,12 @@
 	<div id="c-mid"></div>
 	<div id="c-right"></div>
   </div>
-  <div id="footer">
-  </div>
-  <script></script>
+  <div id="footer"></div>
+  <script>
+  	require(['common'], function($) {
+  		var a = [];
+  		if (a.isArray())alert("isAarray");
+  	});
+  </script>
 </body>
 </html>
