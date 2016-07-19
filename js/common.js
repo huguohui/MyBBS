@@ -154,7 +154,7 @@ defineFunction.call(Object.prototype, {
 	isArray : function(obj) {
 		return typeof obj == 'object' ? obj.constructor == Array : this.constructor == Array;
 	}
-);
+});
 
 
 defineFunction('isObject', function(obj) {
@@ -163,10 +163,7 @@ defineFunction('isObject', function(obj) {
 
 
 define(['jquery'], function($) {
-	var URL = function() {
-        if (window.URL)
-            return this;
-
+	function URL() {
 		this.url = window.location.href;
 		this.scheme = window.location.scheme;
 		this.host = window.location.host;
@@ -226,9 +223,11 @@ define(['jquery'], function($) {
 		}
 	};
 
-	// As a jquery extends.
-	if ($ && $.jQuery)
-		$.extend({ URL : URL });
 
-	return new URL();
+	var _URL = new URL();
+
+	// Exports as a jquery extends.
+	$ && $.extend({ URL : _URL });
+
+	return _URL;
 });
