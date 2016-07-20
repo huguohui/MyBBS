@@ -88,6 +88,10 @@ defineFunction.call(String.prototype, {
             }
         }
 		return true;
+	},
+	
+	format : function() {
+		
 	}
 });
 
@@ -96,16 +100,18 @@ defineFunction.call(Array.prototype, {
 	each : function(callback) {
 		if (typeof callback != 'function') return;
 
-		for (var i in this) {
-			callback(i, this[i]);
+		for (var i = 0; i < this.length; i++) {
+			if (callback(i, this[i]) === false)
+				break;
 		}
 	},
 
 	clone : function() {
 		var temp = [];
-		for (var idx in this) {
-			temp[idx] = this[idx];
-		}
+		this.each(function(idx, v) {
+			temp[idx] = v;
+		});
+
 		return temp;
 	},
 
@@ -113,17 +119,22 @@ defineFunction.call(Array.prototype, {
 		return this.length == 0;
 	},
 
-	copy : function(arr) {
+	clean : function() {
+		this.splice(0, this.length);
+	},
+
+	copyOf : function(arr) {
 		if (!isObject(arr) || !arr.isArray() || arr.isEmpty())
 			return;
 
-		for (var key in arr) {
-			this[key] = arr[key];
-		}
+		var $this = this;
+		arr.each(function(k, v) {
+			$this[k] = v;
+		});
 	},
 
 	remove : function(index) {
-		if (!index || index >= this.length)
+		if (index < 0 || index >= this.length)
 			return;
 
 		if (this[index]) {
@@ -131,21 +142,42 @@ defineFunction.call(Array.prototype, {
 		}
 	},
 
-	inArray : function(arr) {
-		if (!arr || arr.constructor != Array || arr.length == 0
-				|| arr.length < this.length)
+	removeValue : function(val) {
+		if (!val) return;
+
+		var $this = this;
+		this.each(function(i, v) {
+			if (v === val)
+				$this.remove(i);
+		});
+	},
+
+	containsArray : function(arr) {
+		if (!isObject(arr) || !arr.isArray() || arr.isEmpty() || arr.length > this.length)
 			return false;
 
-		var temp = this.clone();
-		for (var k in arr) {
-			for (var kk in this) {
-				if (arr[k] == this[kk]) {
-					temp.remove(k);
-				}
+		var temp = arr.clone();
+		arr.each(function(k, v) {
+			if (temp.containsValue(v)) {
+				temp.removeValue(v);
 			}
-		}
+		})
 
-		return temp.length == 0;
+		return temp.length === 0;
+	},
+
+	containsValue : function(val) {
+		if (!val) return false;
+		var contains = false;
+
+		this.each(function(k, v) {
+			if (v == val) {
+				contains = true;
+				return false;
+			}
+		});
+
+		return contains;
 	}
 });
 
@@ -157,23 +189,39 @@ defineFunction.call(Object.prototype, {
 });
 
 
-defineFunction('isObject', function(obj) {
-	return typeof obj == 'object' && obj !== null;
+defineFunction({
+	isObject : function(obj) {
+		return typeof obj == 'object' && obj !== null;
+	},
+	
+	formatString : function() {
+		var arg = arguments,
+			temp = arg[0];
+		if (arg.length < 2 || typeof temp != 'string') return '';
+
+		for (var i = 1; i < arg.length; i++) {
+			console.log('$' + i + '=>' +  arg[i]);
+			temp = temp.replace('$' + i, arg[i]);
+		}
+		
+		return temp;
+	}
 });
 
 
-define(['jquery'], function($) {
+define('URL', ['jquery'], function($) {
 	function URL() {
-		this.url = window.location.href;
-		this.scheme = window.location.scheme;
-		this.host = window.location.host;
-		this.port = window.location.port;
-		this.path = window.location.path;
-		this.query = window.location.search.substring(1);
 		this.init();
 	};
 
 	URL.prototype = {
+		url : window.location.href,
+		scheme : window.location.protocol,
+		host : window.location.host,
+		port : window.location.port,
+		path : window.location.pathname,
+		query : window.location.search.substring(1),
+		hash : window.location.hash,
 		constructor : URL,
 		go : function(_url) {
 			if (_url && _url.trim().length > 0)
@@ -197,21 +245,21 @@ define(['jquery'], function($) {
 			this.parseParam();
 		},
 		buildURL : function() {
-			
+			return this.url = formatString('$1//$2:$3$4$5$6', this.scheme, this.host, this.port || 80, this.path,
+					this.query, this.hash);
 		},
 		parseParam : function() {
-			var param = '',
-				str = window.location.search.substring(1);
+			var param = {},
+				str = this.query;
 
 			if (str && str.trim().length > 0 && (str.contains('&') || str.contains('='))) {
                 var temp = str.contains('&') ? str.split('&') : [str];
-				var arr = [];
 				for (var i = 0; i < temp.length; i++) {
 					arr = temp[i].split('=');
 					param[arr[0]] = !!arr[1] ? decodeURIComponent(arr[1]) : '';
 				}
 
-				!!param && this.apply(param);
+				this.apply(param);
 			}
 
 			return param;
@@ -222,7 +270,6 @@ define(['jquery'], function($) {
 			}
 		}
 	};
-
 
 	var _URL = new URL();
 
