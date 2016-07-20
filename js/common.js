@@ -41,7 +41,7 @@ function isFunction() {
 	if (!args.length) return;
 
 	if (typeof args[0] == 'object') {
-		return typeof args[1] == 'function' && args[0].hasOwnProperty(args[1]);
+		return typeof args[1] == 'function' && typeof args[0][args[1].name] == 'function';
 	}
 
 	return typeof args[0] == 'function';
@@ -200,7 +200,6 @@ defineFunction({
 		if (arg.length < 2 || typeof temp != 'string') return '';
 
 		for (var i = 1; i < arg.length; i++) {
-			console.log('$' + i + '=>' +  arg[i]);
 			temp = temp.replace('$' + i, arg[i]);
 		}
 		
@@ -209,8 +208,8 @@ defineFunction({
 });
 
 
-define('URL', ['jquery'], function($) {
-	function URL() {
+define(['jquery'], function($) {
+	var URL = function() {
 		this.init();
 	};
 
