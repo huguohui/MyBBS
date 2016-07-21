@@ -249,7 +249,7 @@ define(['jquery'], function($) {
 		},
 		parseParam : function() {
 			var param = {},
-				str = this.query;
+				str = arguments[0] || this.query;
 
 			if (str && str.trim().length > 0 && (str.contains('&') || str.contains('='))) {
                 var temp = str.contains('&') ? str.split('&') : [str];
