@@ -230,10 +230,7 @@ define(['jquery'], function($) {
 			window.location.reload();
 		},
         getParam : function(key) {
-            if (this.hasOwnProperty(key)) {
-                return this[key];
-            }
-            return null;
+            return this[key];
         },
         setParam : function(key, value) {
             if (!key) return;
@@ -244,8 +241,9 @@ define(['jquery'], function($) {
 			this.parseParam();
 		},
 		buildURL : function() {
-			return this.url = formatString('$1//$2:$3$4$5$6', this.scheme, this.host, this.port || 80, this.path,
-					this.query, this.hash);
+			return this.url = formatString('$1//$2:$3$4$5$6',
+							this.scheme, this.host, this.port || 80, this.path,
+									this.query, this.hash);
 		},
 		parseParam : function() {
 			var param = {},
@@ -255,7 +253,7 @@ define(['jquery'], function($) {
                 var temp = str.contains('&') ? str.split('&') : [str];
 				for (var i = 0; i < temp.length; i++) {
 					arr = temp[i].split('=');
-					param[arr[0]] = !!arr[1] ? decodeURIComponent(arr[1]) : '';
+					param[arr[0]] = !!arr[1] ? decodeURIComponent(arr[1]) : null;
 				}
 
 				this.apply(param);
