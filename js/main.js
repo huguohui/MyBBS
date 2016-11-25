@@ -1,3 +1,5 @@
+var j = location.search;
+
 // Require configure.　
 require.config({
 	baseUrl : 'js'
@@ -9,11 +11,14 @@ require(['jquery'], function($) {
 	
 });
 
+console.log(location);
+
 
 // Defines a module by a object for some configuration.
 define({
 	color : 'black',
-	size : 'unsize'
+	size : 'unsize',
+	j : j
 });
 
 

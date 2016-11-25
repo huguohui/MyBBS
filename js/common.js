@@ -48,6 +48,75 @@ function isFunction() {
 }
 
 
+/**
+ * Check a variable if object.
+ * @param  {Object}  obj The variable will be check.
+ * @return {Boolean} If object return true, else false.
+ */
+function isObject(obj) {
+	return typeof obj == 'object' && obj !== null;
+}
+
+
+/**
+ * Formats string to specail format. 
+ */
+function formatString() {
+	var arg = arguments,
+		temp = arg[0];
+	if (arg.length < 2 || typeof temp != 'string') return '';
+
+	for (var i = 1; i < arg.length; i++) {
+		temp = temp.replace('$' + i, arg[i]);
+	}
+	
+	return temp;
+}
+
+
+/**
+ * To extending a special object by given value.
+ * @param {Object} obj The object will to extending.
+ * @param {Object} val The given value.
+ */
+function extend(obj, val) {
+	var $obj = {};
+	if (obj) {
+		if (val) {
+			if (isObject(obj))
+				$obj = obj;
+			else
+				return {};
+		}else{
+			if (this == window)
+				return {};
+
+			$obj = this;
+			val = obj;
+		}
+	}else{
+		return {};
+	}
+
+	for (var key in val) {
+		var _val = val[key],
+			cstr = _val && _val.constructor;
+
+		switch(cstr.name) {
+			case 'String':
+			case 'Number':
+				$obj[key] = _val;
+				break;
+
+			default:
+				extend($obj[key] = {}, _val);
+				break;
+		}
+	}
+}
+
+
+
 defineFunction.call(String.prototype, {
 	go : function() {
 		window.URL.go(this);
@@ -185,25 +254,6 @@ defineFunction.call(Array.prototype, {
 defineFunction.call(Object.prototype, {
 	isArray : function(obj) {
 		return typeof obj == 'object' ? obj.constructor == Array : this.constructor == Array;
-	}
-});
-
-
-defineFunction({
-	isObject : function(obj) {
-		return typeof obj == 'object' && obj !== null;
-	},
-	
-	formatString : function() {
-		var arg = arguments,
-			temp = arg[0];
-		if (arg.length < 2 || typeof temp != 'string') return '';
-
-		for (var i = 1; i < arg.length; i++) {
-			temp = temp.replace('$' + i, arg[i]);
-		}
-		
-		return temp;
 	}
 });
 
