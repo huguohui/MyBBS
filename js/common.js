@@ -61,16 +61,30 @@ function isObject(obj) {
 /**
  * Formats string to specail format. 
  */
-function formatString() {
+function formatStr() {
 	var arg = arguments,
-		temp = arg[0];
-	if (arg.length < 2 || typeof temp != 'string') return '';
+		temp = this != window ? this : arg.shift();
+	if (!arg.length || typeof temp != 'string') return '';
 
-	for (var i = 1; i < arg.length; i++) {
-		temp = temp.replace('$' + i, arg[i]);
+	for (var i in arg) {9
+		temp = temp.replace(/(^|[^\\])\$[a-z]\w*/i, '$1' + arg[i]);
 	}
-	
-	return temp;
+
+	return temp.replace(/\\(\$[a-z]\w*)/ig, '$1');
+}
+
+
+/**
+ * Check property of the special object if more than one.
+ * @param {Object} obj The object will to checking.
+ */
+function isEmptyObj(obj) {
+	var pc = 0;
+	for (var key in obj) {
+		pc++;
+	}
+
+	return pc == 0;
 }
 
 
@@ -94,30 +108,25 @@ function extend(obj, val) {
 			$obj = this;
 			val = obj;
 		}
+
+		for (var key in val) {
+			var _val = val[key],
+				cstct = _val.constructor;
+
+			if (isEmptyObj(_val)) {
+				$obj[key] = _val;
+			}else{
+				extend($obj[key] = cstct.name == 'Array' ? [] : {}, _val);
+			}
+		}
 	}else{
 		return {};
-	}
-
-	for (var key in val) {
-		var _val = val[key],
-			cstr = _val && _val.constructor;
-
-		switch(cstr.name) {
-			case 'String':
-			case 'Number':
-				$obj[key] = _val;
-				break;
-
-			default:
-				extend($obj[key] = {}, _val);
-				break;
-		}
 	}
 }
 
 
 
-defineFunction.call(String.prototype, {
+extend(String.prototype, {
 	go : function() {
 		window.URL.go(this);
 	},
@@ -144,7 +153,7 @@ defineFunction.call(String.prototype, {
 	},
 
 	toNumber : function() {
-		return parseInt(this);
+		return parseInt(this);	
 	},
 
 	contains : function() {
@@ -160,12 +169,12 @@ defineFunction.call(String.prototype, {
 	},
 	
 	format : function() {
-		
+		return formatStr.apply(this, arguments);
 	}
 });
 
 
-defineFunction.call(Array.prototype, {
+extend(Array.prototype, {
 	each : function(callback) {
 		if (typeof callback != 'function') return;
 
@@ -251,8 +260,9 @@ defineFunction.call(Array.prototype, {
 });
 
 
-defineFunction.call(Object.prototype, {
+extend(Object.prototype, {
 	isArray : function(obj) {
+		obj = obj || this;
 		return typeof obj == 'object' ? obj.constructor == Array : this.constructor == Array;
 	}
 });
@@ -291,7 +301,7 @@ define(['jquery'], function($) {
 			this.parseParam();
 		},
 		buildURL : function() {
-			return this.url = formatString('$1//$2:$3$4$5$6',
+			return this.url = formatStr('$1//$2:$3$4$5$6',
 							this.scheme, this.host, this.port || 80, this.path,
 									this.query, this.hash);
 		},
