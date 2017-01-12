@@ -62,11 +62,11 @@ function isObject(obj) {
  * Formats string to specail format. 
  */
 function formatStr() {
-	var arg = arguments,
+	var arg = Array.prototype.slice.call(arguments, 0),
 		temp = this != window ? this : arg.shift();
 	if (!arg.length || typeof temp != 'string') return '';
 
-	for (var i in arg) {9
+	for (var i in arg) {
 		temp = temp.replace(/(^|[^\\])\$[a-z]\w*/i, '$1' + arg[i]);
 	}
 
