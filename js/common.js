@@ -62,15 +62,35 @@ function isObject(obj) {
  * Formats string to specail format. 
  */
 function formatStr() {
-	var arg = Array.prototype.slice.call(arguments, 0),
-		temp = this != window ? this : arg.shift();
-	if (!arg.length || typeof temp != 'string') return '';
+	var args = Array.prototype.slice.call(arguments, 0),
+		str = this != window ? this : args.shift(),
+		regex = /\$[a-zA-Z_]\w*/g,
+		matched = [],
+		tempArr = [],
+		isKvValue = false;
 
-	for (var i in arg) {
-		temp = temp.replace(/(^|[^\\])\$[a-z]\w*/i, '$1' + arg[i]);
+	if (!arg.length || typeof str != 'string')
+		return '';
+
+	while((tempArr = regex.exec(this)) != null) {
+		matched.push(tempArr[0]);
+	}
+	
+	if (typeof args[0] == 'object' && args[0].constructor == Object) {
+		var i = 0;
+		for (var key in args[0]) {
+			matched[i] = '$' + key;
+			args[i++ + 1] = args[0][key];
+		}
+		args.length = i;
+		isKvValue = true;
 	}
 
-	return temp.replace(/\\(\$[a-z]\w*)/ig, '$1');
+	for (var i = 0; i < Math.min(matched.length, args.length); i++) {
+		str = str.replace(matched[i], args[isKvValue ? i + 1 : i]);
+	}
+
+	return str;
 }
 
 
@@ -79,12 +99,11 @@ function formatStr() {
  * @param {Object} obj The object will to checking.
  */
 function isEmptyObj(obj) {
-	var pc = 0;
 	for (var key in obj) {
-		pc++;
+		return false;
 	}
 
-	return pc == 0;
+	return true;
 }
 
 
@@ -94,33 +113,24 @@ function isEmptyObj(obj) {
  * @param {Object} val The given value.
  */
 function extend(obj, val) {
-	var $obj = {};
-	if (obj) {
-		if (val) {
-			if (isObject(obj))
-				$obj = obj;
-			else
-				return {};
-		}else{
-			if (this == window)
-				return {};
-
-			$obj = this;
-			val = obj;
-		}
-
-		for (var key in val) {
-			var _val = val[key],
-				cstct = _val.constructor;
-
-			if (isEmptyObj(_val)) {
-				$obj[key] = _val;
-			}else{
-				extend($obj[key] = cstct.name == 'Array' ? [] : {}, _val);
-			}
-		}
-	}else{
+	if ((this == window || !isObject(this) && !isObject(obj) || !isObject(val))
+		|| (isObject(this) && !isObject(obj))
 		return {};
+
+	if (isObject(this)) {
+		obj = this;
+		val = obj;
+	}
+	
+	for (var key in val) {
+		var exVal = val[key],
+			exConst = exVal.constructor;
+
+		if (isEmptyObj(exVal)) {
+			obj[key] = exVal;
+		}else{
+			extend(obj[key] = exConst.name == 'Array' ? [] : {}, exVal);
+		}
 	}
 }
 
@@ -134,10 +144,7 @@ extend(String.prototype, {
 	endWith : function(str) {
 		if (!str) return false;
 
-		if (this.lastIndexOf(str) == this.length - str.length)
-			return true;
-		else
-			return false;
+		return this.lastIndexOf(str) == this.length - str.length;
 	},
 
 	inArray : function(arr) {
