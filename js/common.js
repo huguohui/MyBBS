@@ -54,7 +54,17 @@ function isFunction() {
  * @return {Boolean} If object return true, else false.
  */
 function isObject(obj) {
-	return typeof obj == 'object' && obj !== null;
+	return !!obj && typeof obj == 'object';
+}
+
+
+/**
+ * Check a variable if real object.
+ * @param  {Object}  obj The variable will be check.
+ * @return {Boolean} If real object return true, else false.
+ */
+function isRealObject(obj) {
+	return isObject(obj) && Object.prototype.toString.call(obj) == '[object Object]';
 }
 
 
@@ -76,7 +86,7 @@ function formatStr() {
 		matched.push(tempArr[0]);
 	}
 	
-	if (typeof args[0] == 'object' && args[0].constructor == Object) {
+	if (isRealObject(arg[0])) {
 		var i = 0;
 		for (var key in args[0]) {
 			matched[i] = '$' + key;
@@ -113,23 +123,25 @@ function isEmptyObj(obj) {
  * @param {Object} val The given value.
  */
 function extend(obj, val) {
-	if ((this == window || !isObject(this) && !isObject(obj) || !isObject(val))
-		|| (isObject(this) && !isObject(obj))
-		return {};
+	if (this == window || !isObject(this)) {
+		if (!isObject(this) || !isRealObject(obj))
+			return;
+	}else if (!isObject(obj) || !isRealObject(val)) {
+		return;
+	}
 
-	if (isObject(this)) {
-		obj = this;
+	if (this != window) {
 		val = obj;
+		obj = this;
 	}
 	
 	for (var key in val) {
-		var exVal = val[key],
-			exConst = exVal.constructor;
+		var exVal = val[key];
 
-		if (isEmptyObj(exVal)) {
+		if (!!exVal || isEmptyObj(exVal) || !isRealObject(exVal)) {
 			obj[key] = exVal;
 		}else{
-			extend(obj[key] = exConst.name == 'Array' ? [] : {}, exVal);
+			extend(obj[key] = typeof exVal == 'array' ? [] : {}, exVal);
 		}
 	}
 }
@@ -270,15 +282,15 @@ extend(Array.prototype, {
 extend(Object.prototype, {
 	isArray : function(obj) {
 		obj = obj || this;
-		return typeof obj == 'object' ? obj.constructor == Array : this.constructor == Array;
+		return isObject(obj) ? obj.constructor == Array : this.constructor == Array;
 	}
 });
 
 
-define(['jquery'], function($) {
-	var URL = function() {
+~function(W, $) {
+	function URL() {
 		this.init();
-	};
+	}
 
 	URL.prototype = {
 		url : window.location.href,
@@ -335,10 +347,8 @@ define(['jquery'], function($) {
 		}
 	};
 
-	var _URL = new URL();
+	W.URL = new URL();
 
 	// Exports as a jquery extends.
-	$ && $.extend({ URL : _URL });
-
-	return _URL;
-});
+	$ && $.extend({ URL : W.URL });
+}(window, $);
