@@ -72,21 +72,19 @@ function isRealObject(obj) {
  * Formats string to specail format. 
  */
 function formatStr() {
-	var args = Array.prototype.slice.call(arguments, 0),
-		str = this != window ? this : args.shift(),
-		regex = /\$[a-zA-Z_]\w*/g,
+	var regex = /\$[a-zA-Z_]\w*/g,
+		regexQuotes = /([$\/{}()?*.\[\]+^])/,
+		args = arguments,
 		matched = [],
+		str = this,
 		tempArr = [],
 		isKvValue = false;
-
-	if (!arg.length || typeof str != 'string')
-		return '';
 
 	while((tempArr = regex.exec(this)) != null) {
 		matched.push(tempArr[0]);
 	}
 	
-	if (isRealObject(arg[0])) {
+	if (typeof args[0] == 'object' && args[0].constructor == Object) {
 		var i = 0;
 		for (var key in args[0]) {
 			matched[i] = '$' + key;
@@ -97,7 +95,8 @@ function formatStr() {
 	}
 
 	for (var i = 0; i < Math.min(matched.length, args.length); i++) {
-		str = str.replace(matched[i], args[isKvValue ? i + 1 : i]);
+		str = str.replace(new RegExp(matched[i].replace(regexQuotes, '\\$1'), 'g'),
+					args[isKvValue ? i + 1 : i]);
 	}
 
 	return str;
