@@ -49,21 +49,11 @@ function isFunction() {
 
 
 /**
- * Check a variable if object.
- * @param  {Object}  obj The variable will be check.
- * @return {Boolean} If object return true, else false.
- */
-function isObject(obj) {
-	return !!obj && typeof obj == 'object';
-}
-
-
-/**
  * Check a variable if real object.
  * @param  {Object}  obj The variable will be check.
  * @return {Boolean} If real object return true, else false.
  */
-function isRealObject(obj) {
+function isObject(obj) {
 	return isObject(obj) && Object.prototype.toString.call(obj) == '[object Object]';
 }
 
@@ -123,9 +113,9 @@ function isEmptyObj(obj) {
  */
 function extend(obj, val) {
 	if (this == window || !isObject(this)) {
-		if (!isObject(this) || !isRealObject(obj))
+		if (!isObject(this) || !isObject(obj))
 			return;
-	}else if (!isObject(obj) || !isRealObject(val)) {
+	}else if (!isObject(obj) || !isObject(val)) {
 		return;
 	}
 
@@ -137,7 +127,7 @@ function extend(obj, val) {
 	for (var key in val) {
 		var exVal = val[key];
 
-		if (!!exVal || isEmptyObj(exVal) || !isRealObject(exVal)) {
+		if (!!exVal || isEmptyObj(exVal) || !isObject(exVal)) {
 			obj[key] = exVal;
 		}else{
 			extend(obj[key] = typeof exVal == 'array' ? [] : {}, exVal);
@@ -292,37 +282,52 @@ extend(Object.prototype, {
 	}
 
 	URL.prototype = {
+
 		url : window.location.href,
+
 		scheme : window.location.protocol,
+
 		host : window.location.host,
+
 		port : window.location.port,
+
 		path : window.location.pathname,
+
 		query : window.location.search.substring(1),
+
 		hash : window.location.hash,
+
 		constructor : URL,
+
 		go : function(_url) {
 			if (_url && _url.trim().length > 0)
 				window.location.href = _url;
 		},
+
 		reload : function() {
 			window.location.reload();
 		},
+
         getParam : function(key) {
             return this[key];
         },
+
         setParam : function(key, value) {
             if (!key) return;
 
             this[key] = value;
         },
+
 		init : function() {				
 			this.parseParam();
 		},
+
 		buildURL : function() {
 			return this.url = formatStr('$1//$2:$3$4$5$6',
 							this.scheme, this.host, this.port || 80, this.path,
 									this.query, this.hash);
 		},
+
 		parseParam : function() {
 			var param = {},
 				str = arguments[0] || this.query;
@@ -339,6 +344,7 @@ extend(Object.prototype, {
 
 			return param;
 		},
+
 		apply : function(arr) {
 			for (var key in arr) {
 				this[key] = arr[key];
@@ -346,8 +352,10 @@ extend(Object.prototype, {
 		}
 	};
 
+
 	W.URL = new URL();
 
 	// Exports as a jquery extends.
 	$ && $.extend({ URL : W.URL });
+	
 }(window, $);
