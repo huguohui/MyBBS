@@ -25,13 +25,27 @@
 	<div id="c-right"></div>
   </div>
   <div id="footer"></div>
-  <script>
-  	require(['jquery', 'common', 'main'], function($, url, m) {
-  		console.log('100'.toNumber());
-  		console.log(url);
-  		console.log(m);
+  <script type="x-tpl" id="" container="#a">
+    <ul>
+      <forEach val: data >
+        <li class="{val % 2 ? 'abc' : '111'}">
+          @if (val == abc) {
+              <input value="$abc" />
+          }
+          @else {
+              <input value="$cc" />
+          }
+        </li>
+      }
+    
 
-  	});
+      </li>
+    </ul>
+  </script>
+  <script>
+    	require(['jquery', 'common', 'main'], function($, url, m) {
+
+    	});
   </script>
 </body>
 </html>
