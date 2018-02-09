@@ -7,9 +7,9 @@
 
 
 var version = '0.1',
-	LF = '\n',
-	CRLF = '\r\n',
-	BUILDIN_ORDERS = [
+	LF = "\n",
+	CRLF = "\r\n",
+	BUILDIN_INSTRUCTION = [
 		'for', 'if', 'else', 'while', 'do', 'set'
 	];
 
@@ -54,9 +54,19 @@ var eachProp = function(obj, func) {
 			}
 		}
 	}
+
 };
 
+var toUpperFirstOne = function(str) {
+	if (str) {
+		var first = str.substring(0, 1);
+		if (first) {
+			return first.toUpperCase() + str.substring(1);
+		}
+	}
 
+	return first;
+};
 
 
 
@@ -87,9 +97,9 @@ var XTempalte = (function() {
 		foundStatementEnd = 0,
 		foundStatement = [],
 		foundStatementNum = 0,
-		foundOrderBeginInfos = {},
-		foundOrderEndInfos = {},
-		compiledOutputs = [],
+		foundInstructionBeginInfos = {},
+		foundInstructionEndInfos = {},
+		executedContent = [],
 		matchStatement = [],
 		assignVariables = {},
 
@@ -129,25 +139,25 @@ var XTempalte = (function() {
 		},
 
 
-		findBuildinOrder : function(statement) {
+		findBuildinInstruction : function(statement) {
 			var index = 0;
-			for (var idx in BUILDIN_ORDERSS) {
-				if ((index = statement.indexOf(BUILDIN_ORDERS[idx])) != -1) {
+			for (var idx in BUILDIN_INSTRUCTIONS) {
+				if ((index = statement.indexOf(BUILDIN_INSTRUCTION[idx])) != -1) {
 					currentColumn += index;
-					return BUILDIN_ORDERS[idx];
+					return BUILDIN_INSTRUCTION[idx];
 				}
 			}
 		},
 
 
 		findStatementBegin : function(line) {
-			var beginIndex = 0, endIndex = 0, order;
+			var beginIndex = 0, endIndex = 0, Instruction;
 			if (!isStatementBeginOpenSymbolFound) {
 				if ((beginIndex = line.indexOf(statementBeginOpenSymbol)) != -1) {
 					isStatementBeginOpenSymbolFound = true;
 					currentColumn = beginIndex;
-					if ((order = findBuildinOrder(line.substring(beginIndex)))) {
-						foundOrderBeginInfos[order] = {
+					if ((Instruction = findBuildinInstruction(line.substring(beginIndex)))) {
+						foundInstructionBeginInfos[Instruction] = {
 							index : foundStatementBegin
 						};
 					}
@@ -166,13 +176,13 @@ var XTempalte = (function() {
 
 
 		findStatementEnd : function(line) {
-			var beginIndex = 0, endIndex = 0, order;
+			var beginIndex = 0, endIndex = 0, Instruction;
 			if (isInStatementBlock) {
 				if (!isStatementEndOpenSymbolFound) {
 					if ((beginIndex = line.indexOf(statementEndOpenSymbol)) != -1) {
 						parsedLine = currentLine;
-						if ((order = findBuildinOrder(line.substring(beginIndex)))) {
-							foundOrderBeginInfos[order] = {
+						if ((Instruction = findBuildinInstruction(line.substring(beginIndex)))) {
+							foundInstructionBeginInfos[Instruction] = {
 								index : foundStatementEnd
 							};
 						}
@@ -212,8 +222,8 @@ var XTempalte = (function() {
 
 
 		countFoundStatement : function() {
-			eachProp(foundOrderBeginInfos, function(k, v) {
-				var index = v.index, endInfo = foundOrderEndInfos[k];
+			eachProp(foundInstructionBeginInfos, function(k, v) {
+				var index = v.index, endInfo = foundInstructionEndInfos[k];
 				if (endInfo) {
 					if (index == endInfo.index) {
 						foundStatementNum++;
@@ -224,28 +234,21 @@ var XTempalte = (function() {
 
 
 		parseStatement : function() {
-			var _this = this;
+			var self = this;
 			each(foundStatement, function(idx, line) {
-				_this.parseLine(line);
+				self.parseLine(line);
 			});
 		},
 
 
 		parseLine : function(statement) {
 			if (statement) {
-				var keyword = this.findBuildinOrder(statement);
+				var keyword = this.findBuildinInstruction(statement);
 				if (!keyword) {
 					throw new Error('Invalid syntax in statement: ' + statement);
 				}
 
-				switch(keyword) {
-					case 'for':
-						this.parseForStatement(statement);
-						break;
-					case 'if':
-						this.parseIfStatetment(statement);
-						break;
-				}
+				this['parse' + keyword]
 			}
 		},
 
@@ -264,8 +267,16 @@ var XTempalte = (function() {
 			var line = "";
 			while((line = this.readLine()) != null) {
 				this.findStatement(line);
-
 			}
+
+			if (isInStatementBlock && !isFullStatementFound) {
+				throw new Error('Excepts a statement end but not found in template!');
+			}
+		},
+
+
+		executeStatement : function(statement) {
+
 		},
 
 
